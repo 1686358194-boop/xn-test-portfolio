@@ -1,138 +1,84 @@
-# xn-test｜Web安全渗透测试作品集
+# 🛡️ xn-test｜企业级Web安全评估报告
 
-## 👤 一、项目定位
-本项目基于 DVWA 靶场完成 Web 安全漏洞复现与验证，重点覆盖：
-- SQL Injection（SQL注入）
-- XSS（存储型 / 反射型）
-- Burp Suite 流量分析与请求篡改
+## 📌 1. 项目概述
+本项目基于 DVWA 靶场，对常见Web安全漏洞进行复现、分析与风险评估，模拟企业安全测试流程。
 
-目标能力：
-👉 Web漏洞原理理解 + 攻击验证 + 基础安全分析能力
-
----
-
-## ⚙️ 二、技术栈
-- DVWA（漏洞靶场）
-- Burp Suite（抓包 / Repeater）
-- Chrome DevTools
-- HTTP协议分析
-- 基础SQL语句与PHP执行逻辑
+覆盖漏洞：
+- SQL Injection
+- XSS（Stored / Reflected）
+- HTTP请求篡改（Burp Suite）
 
 ---
 
-## 🧠 三、核心能力
-✔ Web安全基础能力  
-✔ OWASP Top 10理解  
-✔ SQL注入攻击链分析  
-✔ XSS攻击与数据窃取风险理解  
-✔ Burp Suite抓包与重放  
-✔ HTTP请求参数篡改能力  
+## 🎯 2. 安全评估目标
+- 识别Web应用攻击面
+- 验证输入输出安全问题
+- 分析漏洞影响范围
+- 提供企业级修复建议
 
 ---
 
-## 📁 四、项目结构
-```
-xn-test/
-├── README.md
-├── DVWA-Lab/
-│   ├── xss.md
-│   ├── sql-injection.md
-├── burp-notes.md
-├── assets/screenshots/
-```
+## 🧱 3. 测试架构
+Browser → Burp Suite → DVWA → Database
 
 ---
 
-## 💥 五、漏洞复现说明
+## ⚠️ 4. 风险汇总
 
-### 1️⃣ SQL Injection
-
-#### 攻击点
-```text
-?id=1' OR 1=1 --
-```
-
-#### 现象
-- 绕过查询逻辑
-- 返回管理员数据
-- 数据库报错信息泄露
-
-#### 安全本质
-SQL拼接未做参数化处理
-
-#### 🔒 修复方式
-- 使用 Prepared Statement
-- 输入过滤
-- 最小权限数据库账号
+| 漏洞 | 等级 | 影响 |
+|------|------|------|
+| SQL Injection | 高危 | 数据泄露 / 认证绕过 |
+| Stored XSS | 高危 | 会话劫持 |
+| Reflected XSS | 中高危 | 钓鱼攻击 |
 
 ---
 
-### 2️⃣ XSS（Stored / Reflected）
+## 🧪 5. 漏洞分析
 
-#### Payload
-```html
-<script>alert(document.cookie)</script>
-```
+### SQL Injection
+- 输入未过滤直接拼接SQL
+- 可构造 OR 1=1 绕过查询
 
-#### Stored XSS特点
-- 数据被存储
-- 所有访问者都会触发
+**修复：**
+- Prepared Statement
+- 参数化查询
 
-#### Reflected XSS特点
-- URL即时触发
-- 无存储过程
+---
 
-#### 🔒 防御
+### XSS
+- 未做输出编码导致脚本执行
+
+**修复：**
 - HTML转义
 - CSP策略
 - HttpOnly Cookie
 
 ---
 
-### 3️⃣ Burp Suite分析
-
-#### 流程
-```
-浏览器 → Proxy → Burp → 修改请求 → Repeater验证
-```
-
-#### 能力点
-- HTTP请求结构分析
-- 参数修改验证漏洞
-- 重放攻击模拟
+### Burp分析
+- 拦截HTTP请求
+- 修改参数验证漏洞
+- 重放请求验证行为
 
 ---
 
-## 📷 六、截图证据
-见 assets/screenshots（真实DVWA环境验证）
+## 📊 6. 风险评级模型
+- Critical：系统级控制
+- High：数据泄露
+- Medium：信息泄露
+- Low：轻微暴露
 
 ---
 
-## 🧠 七、项目理解与收获（面试表达）
+## 🧠 7. 安全能力总结
+- Web漏洞原理分析
+- HTTP协议理解
+- 基础渗透测试流程
+- Burp Suite使用
+- 安全修复思维
 
-通过本项目，我重点理解了三个安全问题：
+---
 
-1. 输入与执行的边界问题（SQL注入）
-2. 前端输出与脚本执行问题（XSS）
-3. 攻击者视角下的请求可控性（Burp抓包分析）
+## 🚀 8. 面试一句话总结
+本项目用于验证Web常见漏洞原理与攻击路径，并提供完整风险分析与修复方案。
 
-在实践过程中，我逐步从“复现漏洞”转向“理解漏洞产生原因”，
-并开始关注系统在设计层面的安全缺陷。
-## ❓ 八、可能的面试讨论方向
-
-在交流中可能涉及以下技术点：
-
-- SQL注入的成因与防护方式
-- XSS的不同类型及影响范围
-- Burp Suite在渗透测试中的作用
-- HTTP请求结构与参数控制方式
-- 常见Web漏洞的基本防御思路
-## 🚀 九、总结
-
-本项目主要用于验证基础Web安全漏洞的形成原因与攻击方式，
-帮助建立对常见Web安全问题的整体认知。
-
-后续计划进一步学习：
-- 更复杂的业务逻辑漏洞
-- 权限控制类漏洞
-- 企业级安全防护机制
